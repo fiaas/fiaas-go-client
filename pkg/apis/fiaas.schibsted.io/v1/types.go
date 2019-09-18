@@ -35,7 +35,7 @@ type Application struct {
 }
 
 // ApplicationSpec contains data used to create a CRD.
-// See https://github.schibsted.io/finn/fiaas-deploy-daemon/blob/master/docs/crd/examples/fiaas-deploy-daemon.yaml
+// See https://github.com/fiaas/fiaas-deploy-daemon/blob/master/docs/crd/examples/fiaas-deploy-daemon.yaml
 // Note: using an anonymous interface{} type for Config results in badly generated code
 type ApplicationSpec struct {
 	Application string `json:"application"`
