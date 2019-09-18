@@ -13,4 +13,5 @@ blocks:
       jobs:
         - name: verify
           commands:
+            - checkout
             - make verify
