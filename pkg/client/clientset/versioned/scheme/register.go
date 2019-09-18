@@ -19,7 +19,7 @@ limitations under the License.
 package scheme
 
 import (
-	fiaasv1 "github.schibsted.io/finn/fiaas-skipshund/pkg/apis/fiaas.schibsted.io/v1"
+	fiaasv1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

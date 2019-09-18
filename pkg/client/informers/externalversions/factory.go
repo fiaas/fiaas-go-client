@@ -23,9 +23,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned"
-	fiaasschibstedio "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/fiaas.schibsted.io"
-	internalinterfaces "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/internalinterfaces"
+	versioned "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned"
+	fiaasschibstedio "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/fiaas.schibsted.io"
+	internalinterfaces "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

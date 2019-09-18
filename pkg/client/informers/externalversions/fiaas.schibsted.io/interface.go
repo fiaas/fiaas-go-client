@@ -19,8 +19,8 @@ limitations under the License.
 package fiaas
 
 import (
-	v1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/fiaas.schibsted.io/v1"
-	internalinterfaces "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/internalinterfaces"
+	v1 "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/fiaas.schibsted.io/v1"
+	internalinterfaces "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to each of this group's versions.

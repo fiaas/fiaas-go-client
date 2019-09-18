@@ -19,7 +19,7 @@ limitations under the License.
 package fake
 
 import (
-	fiaasschibstediov1 "github.schibsted.io/finn/fiaas-skipshund/pkg/apis/fiaas.schibsted.io/v1"
+	fiaasschibstediov1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

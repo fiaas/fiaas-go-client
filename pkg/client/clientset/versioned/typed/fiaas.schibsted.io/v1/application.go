@@ -21,8 +21,8 @@ package v1
 import (
 	"time"
 
-	v1 "github.schibsted.io/finn/fiaas-skipshund/pkg/apis/fiaas.schibsted.io/v1"
-	scheme "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned/scheme"
+	v1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
+	scheme "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

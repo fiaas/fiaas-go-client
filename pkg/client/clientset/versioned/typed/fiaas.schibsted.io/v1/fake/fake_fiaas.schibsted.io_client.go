@@ -19,7 +19,7 @@ limitations under the License.
 package fake
 
 import (
-	v1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
+	v1 "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )

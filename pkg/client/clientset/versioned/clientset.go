@@ -19,7 +19,7 @@ limitations under the License.
 package versioned
 
 import (
-	fiaasv1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
+	fiaasv1 "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

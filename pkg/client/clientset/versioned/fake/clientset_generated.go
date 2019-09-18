@@ -19,9 +19,9 @@ limitations under the License.
 package fake
 
 import (
-	clientset "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned"
-	fiaasv1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
-	fakefiaasv1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1/fake"
+	clientset "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned"
+	fiaasv1 "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1"
+	fakefiaasv1 "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned/typed/fiaas.schibsted.io/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

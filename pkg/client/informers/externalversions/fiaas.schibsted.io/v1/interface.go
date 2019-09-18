@@ -19,7 +19,7 @@ limitations under the License.
 package v1
 
 import (
-	internalinterfaces "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.

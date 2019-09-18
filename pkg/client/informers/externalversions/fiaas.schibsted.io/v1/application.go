@@ -21,10 +21,10 @@ package v1
 import (
 	time "time"
 
-	fiaasschibstediov1 "github.schibsted.io/finn/fiaas-skipshund/pkg/apis/fiaas.schibsted.io/v1"
-	versioned "github.schibsted.io/finn/fiaas-skipshund/pkg/client/clientset/versioned"
-	internalinterfaces "github.schibsted.io/finn/fiaas-skipshund/pkg/client/informers/externalversions/internalinterfaces"
-	v1 "github.schibsted.io/finn/fiaas-skipshund/pkg/client/listers/fiaas.schibsted.io/v1"
+	fiaasschibstediov1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
+	versioned "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned"
+	internalinterfaces "github.com/fiaas/fiaas-go-client/pkg/client/informers/externalversions/internalinterfaces"
+	v1 "github.com/fiaas/fiaas-go-client/pkg/client/listers/fiaas.schibsted.io/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
