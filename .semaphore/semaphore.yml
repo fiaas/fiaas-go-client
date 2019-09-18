@@ -1,0 +1,16 @@
+version: v1.0
+name: fiaas-go-client ci build
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: "Verify generated code"
+    task:
+      prologue:
+        commands:
+          - sem-version go 1.12
+      jobs:
+        - name: verify
+          commands:
+            - make verify
