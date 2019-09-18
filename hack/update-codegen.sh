@@ -10,7 +10,6 @@ CODEGEN_PACKAGE=$TEMP_DIR/code-generator
 
 git clone -b kubernetes-1.13.1 https://github.com/kubernetes/code-generator $CODEGEN_PACKAGE
 
-export GOPATH=~/go
 export GO111MODULE=on
 
 ${CODEGEN_PACKAGE}/generate-groups.sh all \
