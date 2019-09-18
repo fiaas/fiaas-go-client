@@ -9,10 +9,10 @@ blocks:
     task:
       prologue:
         commands:
-          # - export "GOPATH=$(go env GOPATH)"
-          # - export "SEMAPHORE_GIT_DIR=$(go env GOPATH)/src/github.com/${SEMAPHORE_REPO_SLUG}"
-          # - export "PATH=$(go env GOPATH)/bin:${PATH}"
-          # - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
+          - export "GOPATH=$(go env GOPATH)"
+          - export "SEMAPHORE_GIT_DIR=$(go env GOPATH)/src/github.com/${SEMAPHORE_REPO_SLUG}"
+          - export "PATH=$(go env GOPATH)/bin:${PATH}"
+          - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
           - sem-version go 1.12
       jobs:
         - name: verify
