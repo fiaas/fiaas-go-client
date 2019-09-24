@@ -68,3 +68,29 @@ type ApplicationList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []Application `json:"items"`
 }
+
+//
+// application-status.fiaas.schibsted.io:
+//
+
+// +genclient
+// +genclient:noStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ApplicationStatus is a top-level type. A client is created for it.
+type ApplicationStatus struct {
+	metav1.TypeMeta   `json:",inline"` // apiVersion, kind
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	Logs              []string `json:"logs"`
+	Result            string   `json:"Result"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ApplicationStatusList is a top-level list type. The client methods for lists are automatically created.
+// You are not supposed to create a separated client for this one.
+type ApplicationStatusList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []ApplicationStatus `json:"items"`
+}

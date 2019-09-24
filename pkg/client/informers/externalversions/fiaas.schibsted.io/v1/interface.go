@@ -26,6 +26,8 @@ import (
 type Interface interface {
 	// Applications returns a ApplicationInformer.
 	Applications() ApplicationInformer
+	// ApplicationStatuses returns a ApplicationStatusInformer.
+	ApplicationStatuses() ApplicationStatusInformer
 }
 
 type version struct {
@@ -42,4 +44,9 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 // Applications returns a ApplicationInformer.
 func (v *version) Applications() ApplicationInformer {
 	return &applicationInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// ApplicationStatuses returns a ApplicationStatusInformer.
+func (v *version) ApplicationStatuses() ApplicationStatusInformer {
+	return &applicationStatusInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

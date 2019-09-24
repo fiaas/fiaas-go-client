@@ -32,6 +32,10 @@ func (c *FakeFiaasV1) Applications(namespace string) v1.ApplicationInterface {
 	return &FakeApplications{c, namespace}
 }
 
+func (c *FakeFiaasV1) ApplicationStatuses(namespace string) v1.ApplicationStatusInterface {
+	return &FakeApplicationStatuses{c, namespace}
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeFiaasV1) RESTClient() rest.Interface {

@@ -28,6 +28,7 @@ import (
 type FiaasV1Interface interface {
 	RESTClient() rest.Interface
 	ApplicationsGetter
+	ApplicationStatusesGetter
 }
 
 // FiaasV1Client is used to interact with features provided by the fiaas.schibsted.io group.
@@ -37,6 +38,10 @@ type FiaasV1Client struct {
 
 func (c *FiaasV1Client) Applications(namespace string) ApplicationInterface {
 	return newApplications(c, namespace)
+}
+
+func (c *FiaasV1Client) ApplicationStatuses(namespace string) ApplicationStatusInterface {
+	return newApplicationStatuses(c, namespace)
 }
 
 // NewForConfig creates a new FiaasV1Client for the given config.
