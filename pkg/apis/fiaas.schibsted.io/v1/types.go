@@ -1,5 +1,5 @@
 /*
-Copyright 2015 The Kubernetes Authors.
+Copyright 2017-2019 The FIAAS Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ type ApplicationSpec struct {
 // Reference: https://github.com/kubernetes/code-generator/issues/50
 type Config map[string]interface{}
 
-// DeepCopyInto is necessary to be able to use an anonymous interface as type for Config
+// DeepCopyInto is necessary to be able to use a map with an anonymous interface as type for Config
 // kudos to https://gist.github.com/soroushjp/0ec92102641ddfc3ad5515ca76405f4d
 func (in *Config) DeepCopyInto(out *Config) {
 	var buf bytes.Buffer
