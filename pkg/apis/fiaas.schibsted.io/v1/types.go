@@ -1,5 +1,5 @@
 /*
-Copyright 2015 The Kubernetes Authors.
+Copyright 2017-2019 The FIAAS Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ type ApplicationSpec struct {
 // Reference: https://github.com/kubernetes/code-generator/issues/50
 type Config map[string]interface{}
 
-// DeepCopyInto is necessary to be able to use an anonymous interface as type for Config
+// DeepCopyInto is necessary to be able to use a map with an anonymous interface as type for Config
 // kudos to https://gist.github.com/soroushjp/0ec92102641ddfc3ad5515ca76405f4d
 func (in *Config) DeepCopyInto(out *Config) {
 	var buf bytes.Buffer
@@ -67,4 +67,30 @@ type ApplicationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []Application `json:"items"`
+}
+
+//
+// application-status.fiaas.schibsted.io:
+//
+
+// +genclient
+// +genclient:noStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ApplicationStatus is a top-level type. A client is created for it.
+type ApplicationStatus struct {
+	metav1.TypeMeta   `json:",inline"` // apiVersion, kind
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	Logs              []string `json:"logs"`
+	Result            string   `json:"Result"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ApplicationStatusList is a top-level list type. The client methods for lists are automatically created.
+// You are not supposed to create a separated client for this one.
+type ApplicationStatusList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []ApplicationStatus `json:"items"`
 }
