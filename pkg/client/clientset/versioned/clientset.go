@@ -12,8 +12,6 @@ import (
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	FiaasV1() fiaasv1.FiaasV1Interface
-	// Deprecated: please explicitly pick a version if possible.
-	Fiaas() fiaasv1.FiaasV1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
@@ -25,12 +23,6 @@ type Clientset struct {
 
 // FiaasV1 retrieves the FiaasV1Client
 func (c *Clientset) FiaasV1() fiaasv1.FiaasV1Interface {
-	return c.fiaasV1
-}
-
-// Deprecated: Fiaas retrieves the default version of FiaasClient.
-// Please explicitly pick a version.
-func (c *Clientset) Fiaas() fiaasv1.FiaasV1Interface {
 	return c.fiaasV1
 }
 
