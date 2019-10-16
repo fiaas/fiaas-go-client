@@ -38,11 +38,11 @@ type Application struct {
 // See https://github.com/fiaas/fiaas-deploy-daemon/blob/master/docs/crd/examples/fiaas-deploy-daemon.yaml
 // Note: using an anonymous interface{} type for Config results in badly generated code
 type ApplicationSpec struct {
-	Application           string                        `json:"application"`
-	Image                 string                        `json:"image"`
-	Config                Config                        `json:"config"`
-	AdditionalLabels      AdditionalLabelsOrAnnotations `json:"additional_labels,omitempty"`
-	AdditionalAnnotations AdditionalLabelsOrAnnotations `json:"additional_annotations,omitempty"`
+	Application           string                         `json:"application"`
+	Image                 string                         `json:"image"`
+	Config                Config                         `json:"config"`
+	AdditionalLabels      *AdditionalLabelsOrAnnotations `json:"additional_labels,omitempty"`
+	AdditionalAnnotations *AdditionalLabelsOrAnnotations `json:"additional_annotations,omitempty"`
 }
 
 // Config stores fiaas.yml
