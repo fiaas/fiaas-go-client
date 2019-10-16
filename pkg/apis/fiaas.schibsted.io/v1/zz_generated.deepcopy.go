@@ -137,8 +137,16 @@ func (in *ApplicationList) DeepCopyObject() runtime.Object {
 func (in *ApplicationSpec) DeepCopyInto(out *ApplicationSpec) {
 	*out = *in
 	out.Config = in.Config.DeepCopy()
-	in.AdditionalLabels.DeepCopyInto(&out.AdditionalLabels)
-	in.AdditionalAnnotations.DeepCopyInto(&out.AdditionalAnnotations)
+	if in.AdditionalLabels != nil {
+		in, out := &in.AdditionalLabels, &out.AdditionalLabels
+		*out = new(AdditionalLabelsOrAnnotations)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AdditionalAnnotations != nil {
+		in, out := &in.AdditionalAnnotations, &out.AdditionalAnnotations
+		*out = new(AdditionalLabelsOrAnnotations)
+		(*in).DeepCopyInto(*out)
+	}
 	return
 }
 
