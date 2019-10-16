@@ -41,8 +41,8 @@ type ApplicationSpec struct {
 	Application           string                        `json:"application"`
 	Image                 string                        `json:"image"`
 	Config                Config                        `json:"config"`
-	AdditionalLabels      AdditionalLabelsOrAnnotations `json:"additional_labels"`
-	AdditionalAnnotations AdditionalLabelsOrAnnotations `json:"additional_annotations"`
+	AdditionalLabels      AdditionalLabelsOrAnnotations `json:"additional_labels,omitempty"`
+	AdditionalAnnotations AdditionalLabelsOrAnnotations `json:"additional_annotations,omitempty"`
 }
 
 // Config stores fiaas.yml
@@ -50,13 +50,13 @@ type ApplicationSpec struct {
 type Config map[string]interface{}
 
 type AdditionalLabelsOrAnnotations struct {
-	Global                  map[string]string `json:"global"`
-	Deployment              map[string]string `json:"deployment"`
-	HorizontalPodAutoscaler map[string]string `json:"horizontal_pod_autoscaler"`
-	Ingress                 map[string]string `json:"ingress"`
-	Service                 map[string]string `json:"service"`
-	Pod                     map[string]string `json:"pod"`
-	Status                  map[string]string `json:"status"`
+	Global                  map[string]string `json:"global,omitempty"`
+	Deployment              map[string]string `json:"deployment,omitempty"`
+	HorizontalPodAutoscaler map[string]string `json:"horizontal_pod_autoscaler,omitempty"`
+	Ingress                 map[string]string `json:"ingress,omitempty"`
+	Service                 map[string]string `json:"service,omitempty"`
+	Pod                     map[string]string `json:"pod,omitempty"`
+	Status                  map[string]string `json:"status,omitempty"`
 }
 
 // DeepCopyInto is necessary to be able to use a map with an anonymous interface as type for Config
