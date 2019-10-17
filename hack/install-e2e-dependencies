@@ -19,7 +19,8 @@ install_kubectl() {
 
     chmod +x "$install_dir/kubectl"
 
-    install "${install_dir}/kubectl" /usr/local/bin
+    mkdir -p "$HOME/bin"
+    install "${install_dir}/kubectl" "$HOME/bin"
 }
 
 go get sigs.k8s.io/kind@v0.5.1
