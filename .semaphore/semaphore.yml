@@ -15,6 +15,7 @@ blocks:
           - export "GO111MODULE=on"
           - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
           - sem-version go 1.12
+          - hack/install-e2e-dependencies
       jobs:
         - name: verify
           commands:

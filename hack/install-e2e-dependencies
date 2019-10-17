@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+install_kubectl() {
+    local k8s_version="$1"
+    echo "Installing kubectl"
+    local url="https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl"
+    local checksum_url="https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl.sha1"
+    install_dir="$(mktemp -d)"
+    _cleanup() {
+        rm -rf "$install_dir"
+    }
+    trap _cleanup EXIT
+
+    curl -Lo "$install_dir/kubectl" "$url"
+    local checksum="$(curl -Lo - "$checksum_url")"
+    echo "$checksum  $install_dir/kubectl" | shasum --algorithm 1 --check
+
+    chmod +x "$install_dir/kubectl"
+
+    install "${install_dir}/kubectl" /usr/local/bin
+}
+
+go get sigs.k8s.io/kind@v0.5.1
+install_kubectl v1.15.5
