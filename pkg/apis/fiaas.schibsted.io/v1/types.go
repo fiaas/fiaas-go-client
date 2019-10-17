@@ -38,14 +38,26 @@ type Application struct {
 // See https://github.com/fiaas/fiaas-deploy-daemon/blob/master/docs/crd/examples/fiaas-deploy-daemon.yaml
 // Note: using an anonymous interface{} type for Config results in badly generated code
 type ApplicationSpec struct {
-	Application string `json:"application"`
-	Image       string `json:"image"`
-	Config      Config `json:"config"`
+	Application           string                         `json:"application"`
+	Image                 string                         `json:"image"`
+	Config                Config                         `json:"config"`
+	AdditionalLabels      *AdditionalLabelsOrAnnotations `json:"additional_labels,omitempty"`
+	AdditionalAnnotations *AdditionalLabelsOrAnnotations `json:"additional_annotations,omitempty"`
 }
 
 // Config stores fiaas.yml
 // Reference: https://github.com/kubernetes/code-generator/issues/50
 type Config map[string]interface{}
+
+type AdditionalLabelsOrAnnotations struct {
+	Global                  map[string]string `json:"global,omitempty"`
+	Deployment              map[string]string `json:"deployment,omitempty"`
+	HorizontalPodAutoscaler map[string]string `json:"horizontal_pod_autoscaler,omitempty"`
+	Ingress                 map[string]string `json:"ingress,omitempty"`
+	Service                 map[string]string `json:"service,omitempty"`
+	Pod                     map[string]string `json:"pod,omitempty"`
+	Status                  map[string]string `json:"status,omitempty"`
+}
 
 // DeepCopyInto is necessary to be able to use a map with an anonymous interface as type for Config
 // kudos to https://gist.github.com/soroushjp/0ec92102641ddfc3ad5515ca76405f4d
