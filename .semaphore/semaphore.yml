@@ -19,6 +19,4 @@ blocks:
         - name: verify
           commands:
             - checkout
-            - make verify
-            - go get ./...
-            - go test ./...
+            - make verify e2e
