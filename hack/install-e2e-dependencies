@@ -23,5 +23,12 @@ install_kubectl() {
     install "${install_dir}/kubectl" "$HOME/bin"
 }
 
-go get sigs.k8s.io/kind@v0.5.1
+install_kind() {
+    local kind_version="$1"
+    mkdir -p "$HOME/bin"
+    curl -o "$HOME/bin/kind" "https://github.com/kubernetes-sigs/kind/releases/download/${kind_version}/kind-linux-amd64"
+    chmod +x "$HOME/bin/kind"
+}
+
+install_kind 0.5.1
 install_kubectl v1.15.5
