@@ -1,0 +1,101 @@
+apiVersion: fiaas.schibsted.io/v1
+kind: Application
+metadata:
+  name: full
+  namespace: default
+spec:
+  application: full
+  config:
+    version: 3
+    replicas:
+      minimum: 10
+      maximum: 20
+      cpu_threshold_percentage: 60
+    ingress:
+      - host: www.example.com
+        paths:
+          - path: /a
+            port: a
+    healthchecks:
+      liveness:
+        http:
+          port: a
+          path: /health
+          http_headers:
+            X-Custom-Header: liveness-stuff
+      readiness:
+        tcp:
+          port: b
+        initial_delay_seconds: 5
+        period_seconds: 5
+        success_threshold: 2
+        failure_threshold: 6
+        timeout_seconds: 2
+    resources:
+      limits:
+        cpu: 2
+        memory: 1024Mi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    metrics:
+      prometheus:
+        enabled: true
+        port: a
+        path: /prometheus-metrics-here
+      datadog:
+        enabled: true
+        tags:
+          tag1: value1
+          tag2: value2
+    ports:
+      - protocol: http
+        name: a
+        port: 1337
+        target_port: 31337
+      - protocol: tcp
+        name: b
+        port: 1338
+        target_port: 31338
+    labels:
+      deployment:
+        a: b
+        c: d
+      horizontal_pod_autoscaler:
+        e: f
+        g: h
+      ingress:
+        i: j
+        k: l
+      service:
+        m: "n"
+        o: p
+      pod:
+        q: r
+        s: u
+    annotations:
+      service:
+        a: b
+        c: d
+      ingress:
+        e: f
+        g: h
+      horizontal_pod_autoscaler:
+        i: j
+        k: l
+      deployment:
+        m: "n"
+        o: p
+      pod:
+        x: y
+        z: y
+    secrets_in_environment: true
+    admin_access: true
+    extensions:
+      strongbox:
+        iam_role: arn:aws:iam::12345678:role/the-role-name
+        aws_region: eu-central-1
+        groups:
+          - secretgroup1
+          - secretgroup2
+  image: fiaas/fiaas-deploy-daemon:latest
