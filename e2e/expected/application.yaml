@@ -1,0 +1,14 @@
+apiVersion: fiaas.schibsted.io/v1
+kind: Application
+metadata:
+  labels:
+    app: testapplication
+  name: testapplication
+spec:
+  additional_annotations:
+    status:
+      pipeline.finn.no/CallbackURL: http://example.com/callback
+  application: testapplication
+  config:
+    version: 3
+  image: fiaas/fiaas-deploy-daemon:latest

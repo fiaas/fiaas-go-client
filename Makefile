@@ -1,3 +1,5 @@
+.PHONY: e2e
+
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 generate-code:
@@ -5,3 +7,6 @@ generate-code:
 
 verify:
 	${ROOT_DIR}/hack/verify-codegen.sh
+
+e2e:
+	${ROOT_DIR}/hack/e2e-test.sh
