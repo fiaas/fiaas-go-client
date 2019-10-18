@@ -115,6 +115,71 @@ func TestApplication(t *testing.T) {
 	}
 }
 
+var applicationStatusTests = []struct {
+	expectedYamlFilePath string
+	applicationStatus    v1.ApplicationStatus
+}{
+	{"expected/applicationstatus/simple-success.yml", v1.ApplicationStatus{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "simple-success-aabbcc112233",
+			Namespace: "default",
+			Labels: map[string]string{
+				"app":                 "simple-success",
+				"fiaas/deployment_id": "ddeeff556677",
+			},
+		},
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "fiaas.schibsted.io/v1",
+			Kind:       "ApplicationStatus",
+		},
+		Result: "SUCCESS",
+	}},
+}
+
+func TestApplicationStatus(t *testing.T) {
+	clientset, err := createClient()
+	if err != nil {
+		t.Fatalf("failed to create client: %s", err)
+	}
+	for i, testcase := range applicationStatusTests {
+		t.Run(fmt.Sprintf("%d/%s", i, testcase.expectedYamlFilePath), func(t *testing.T) {
+
+			expected, err := applicationStatusFromYaml(testcase.expectedYamlFilePath)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			applicationStatusesClient := clientset.FiaasV1().ApplicationStatuses(
+				testcase.applicationStatus.Namespace)
+			defer func() {
+				err := applicationStatusesClient.Delete(testcase.applicationStatus.Name,
+					&metav1.DeleteOptions{})
+				if err != nil && !apimachineryerrors.IsNotFound(err) {
+					t.Fatalf("failed to delete applicationStatus: %s", err)
+				}
+			}()
+
+			_, err = applicationStatusesClient.Create(&testcase.applicationStatus)
+			if err != nil {
+				t.Fatalf("failed to create applicationStatus: %s", err)
+			}
+
+			actual, err := applicationStatusesClient.Get(testcase.applicationStatus.Name,
+				metav1.GetOptions{})
+			if err != nil {
+				t.Fatalf("failed to get applicationStatus: %s", err)
+			}
+
+			assert.Equal(t, expected.ObjectMeta.Name, actual.ObjectMeta.Name)
+			assert.Equal(t, expected.ObjectMeta.Labels, actual.ObjectMeta.Labels)
+			assert.Equal(t, expected.ObjectMeta.Annotations, actual.ObjectMeta.Annotations)
+			assert.Equal(t, expected.Result, actual.Result)
+			assert.Equal(t, expected.Logs, actual.Logs)
+
+		})
+	}
+}
+
 func createClient() (*fiaasclientset.Clientset, error) {
 	kubeconfigPath, ok := os.LookupEnv("KIND_KUBECONFIG")
 	if !ok {
@@ -145,6 +210,23 @@ func applicationFromYaml(yamlFilePath string) (*v1.Application, error) {
 	application, ok := obj.(*v1.Application)
 	if !ok {
 		return nil, fmt.Errorf("decoded file %s is not v1.Application", yamlFilePath)
+	}
+	return application, nil
+}
+
+func applicationStatusFromYaml(yamlFilePath string) (*v1.ApplicationStatus, error) {
+	yamlBytes, err := ioutil.ReadFile(yamlFilePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file %s", yamlFilePath)
+	}
+	decode := scheme.Codecs.UniversalDeserializer().Decode
+	obj, _, err := decode(yamlBytes, nil, &v1.ApplicationStatus{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode %s: %s", yamlFilePath, err)
+	}
+	application, ok := obj.(*v1.ApplicationStatus)
+	if !ok {
+		return nil, fmt.Errorf("decoded file %s is not v1.ApplicationStatus", yamlFilePath)
 	}
 	return application, nil
 }

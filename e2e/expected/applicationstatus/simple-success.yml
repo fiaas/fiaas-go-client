@@ -1,0 +1,9 @@
+apiVersion: fiaas.schibsted.io/v1
+kind: ApplicationStatus
+metadata:
+  labels:
+    app: simple-success
+    fiaas/deployment_id: ddeeff556677
+  name: simple-success-aabbcc112233
+  namespace: "default"
+result: SUCCESS
