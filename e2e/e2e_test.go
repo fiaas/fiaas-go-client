@@ -22,7 +22,7 @@ var applicationTests = []struct {
 	expectedYamlFilePath string
 	application          v1.Application
 }{
-	{"expected/application.yml", v1.Application{
+	{"expected/application/application.yml", v1.Application{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "testapplication",
 			Namespace: "default",
@@ -45,7 +45,7 @@ var applicationTests = []struct {
 			},
 		},
 	}},
-	{"expected/minimal.yml", v1.Application{
+	{"expected/application/minimal.yml", v1.Application{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "minimal",
 			Namespace: "default",
@@ -60,7 +60,7 @@ var applicationTests = []struct {
 			Config:      v1.Config{"version": 3},
 		},
 	}},
-	{"expected/fullconfig.yml", v1.Application{
+	{"expected/application/fullconfig.yml", v1.Application{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "full",
 			Namespace: "default",
@@ -77,7 +77,7 @@ var applicationTests = []struct {
 	}},
 }
 
-func TestCreate(t *testing.T) {
+func TestApplication(t *testing.T) {
 	clientset, err := createClient()
 	if err != nil {
 		t.Fatalf("failed to create client: %s", err)
