@@ -88,6 +88,7 @@ type ApplicationList struct {
 // +genclient
 // +genclient:noStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +resourceName=application-statuses
 
 // ApplicationStatus is a top-level type. A client is created for it.
 type ApplicationStatus struct {

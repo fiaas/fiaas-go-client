@@ -18,7 +18,7 @@ type FakeApplicationStatuses struct {
 	ns   string
 }
 
-var applicationstatusesResource = schema.GroupVersionResource{Group: "fiaas.schibsted.io", Version: "v1", Resource: "applicationstatuses"}
+var applicationstatusesResource = schema.GroupVersionResource{Group: "fiaas.schibsted.io", Version: "v1", Resource: "application-statuses"}
 
 var applicationstatusesKind = schema.GroupVersionKind{Group: "fiaas.schibsted.io", Version: "v1", Kind: "ApplicationStatus"}
 

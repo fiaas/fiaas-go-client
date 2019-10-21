@@ -51,7 +51,7 @@ func (c *applicationStatuses) Get(name string, options metav1.GetOptions) (resul
 	result = &v1.ApplicationStatus{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
 		Do().
@@ -68,7 +68,7 @@ func (c *applicationStatuses) List(opts metav1.ListOptions) (result *v1.Applicat
 	result = &v1.ApplicationStatusList{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Do().
@@ -85,7 +85,7 @@ func (c *applicationStatuses) Watch(opts metav1.ListOptions) (watch.Interface, e
 	opts.Watch = true
 	return c.client.Get().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Watch()
@@ -96,7 +96,7 @@ func (c *applicationStatuses) Create(applicationStatus *v1.ApplicationStatus) (r
 	result = &v1.ApplicationStatus{}
 	err = c.client.Post().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		Body(applicationStatus).
 		Do().
 		Into(result)
@@ -108,7 +108,7 @@ func (c *applicationStatuses) Update(applicationStatus *v1.ApplicationStatus) (r
 	result = &v1.ApplicationStatus{}
 	err = c.client.Put().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		Name(applicationStatus.Name).
 		Body(applicationStatus).
 		Do().
@@ -120,7 +120,7 @@ func (c *applicationStatuses) Update(applicationStatus *v1.ApplicationStatus) (r
 func (c *applicationStatuses) Delete(name string, options *metav1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		Name(name).
 		Body(options).
 		Do().
@@ -135,7 +135,7 @@ func (c *applicationStatuses) DeleteCollection(options *metav1.DeleteOptions, li
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		VersionedParams(&listOptions, scheme.ParameterCodec).
 		Timeout(timeout).
 		Body(options).
@@ -148,7 +148,7 @@ func (c *applicationStatuses) Patch(name string, pt types.PatchType, data []byte
 	result = &v1.ApplicationStatus{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
-		Resource("applicationstatuses").
+		Resource("application-statuses").
 		SubResource(subresources...).
 		Name(name).
 		Body(data).
