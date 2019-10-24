@@ -11,7 +11,7 @@ blocks:
         commands:
           - export "GOPATH=$(go env GOPATH)"
           - export "SEMAPHORE_GIT_DIR=$(go env GOPATH)/src/github.com/${SEMAPHORE_REPO_SLUG}"
-          - export "PATH=$(go env GOPATH)/bin:${PATH}"
+          - export "PATH=$HOME/bin:$(go env GOPATH)/bin:${PATH}"
           - export "GO111MODULE=on"
           - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
           - sem-version go 1.12
@@ -19,6 +19,5 @@ blocks:
         - name: verify
           commands:
             - checkout
-            - make verify
-            - go get ./...
-            - go test ./...
+            - hack/install-e2e-dependencies
+            - make verify e2e

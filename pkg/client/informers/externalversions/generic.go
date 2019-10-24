@@ -39,7 +39,7 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 	// Group=fiaas.schibsted.io, Version=v1
 	case v1.SchemeGroupVersion.WithResource("applications"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Fiaas().V1().Applications().Informer()}, nil
-	case v1.SchemeGroupVersion.WithResource("applicationstatuses"):
+	case v1.SchemeGroupVersion.WithResource("application-statuses"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Fiaas().V1().ApplicationStatuses().Informer()}, nil
 
 	}

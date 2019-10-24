@@ -1,0 +1,10 @@
+apiVersion: fiaas.schibsted.io/v1
+kind: Application
+metadata:
+  name: minimal
+  namespace: default
+spec:
+  application: minimal
+  config:
+    version: 3
+  image: fiaas/fiaas-deploy-daemon:latest
