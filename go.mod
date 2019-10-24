@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/evanphx/json-patch v4.2.0+incompatible // indirect
+	github.com/ghodss/yaml v0.0.0-20150909031657-73d445a93680
 	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
@@ -20,7 +21,7 @@ require (
 	golang.org/x/text v0.3.2 // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
-	gopkg.in/yaml.v2 v2.2.2 // indirect
+	gopkg.in/yaml.v2 v2.2.2
 	k8s.io/apimachinery v0.0.0-20190612205821-1799e75a0719
 	k8s.io/client-go v0.0.0-20190620085101-78d2af792bab
 	k8s.io/klog v1.0.0 // indirect

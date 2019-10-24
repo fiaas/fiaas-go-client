@@ -10,11 +10,12 @@ import (
 
 	v1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
 	fiaasclientset "github.com/fiaas/fiaas-go-client/pkg/client/clientset/versioned"
+	"github.com/ghodss/yaml"
 	"github.com/stretchr/testify/assert"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	apimachineryerrors "k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
@@ -202,16 +203,40 @@ func applicationFromYaml(yamlFilePath string) (*v1.Application, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read file %s", yamlFilePath)
 	}
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	obj, _, err := decode(yamlBytes, nil, &v1.Application{})
+
+	var application v1.Application
+	err = yaml.Unmarshal(yamlBytes, &application)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode %s: %s", yamlFilePath, err)
 	}
-	application, ok := obj.(*v1.Application)
-	if !ok {
-		return nil, fmt.Errorf("decoded file %s is not v1.Application", yamlFilePath)
+
+	application.Spec.Config = normalizeNumberTypes(application.Spec.Config)
+
+	return &application, nil
+}
+
+// XXX: The yaml library used in this test and the generated API objects for the v1.Config resource do not agree about
+// which type parsed numbers should have, because v1.Config is just an alias for map[string]interface. This function
+// tries to convert all numbers in the input to int64, which is what the client API objects use.
+func normalizeNumberTypes(in map[string]interface{}) map[string]interface{} {
+	for k, v := range in {
+		switch thing := v.(type) {
+		case map[string]interface{}:
+			in[k] = normalizeNumberTypes(thing)
+		case []interface{}:
+			for i, item := range thing {
+				innerItem, ok := item.(map[string]interface{})
+				if ok {
+					thing[i] = normalizeNumberTypes(innerItem)
+				}
+			}
+		case float64:
+			in[k] = int64(thing)
+		case int:
+			in[k] = int64(thing)
+		}
 	}
-	return application, nil
+	return in
 }
 
 func applicationStatusFromYaml(yamlFilePath string) (*v1.ApplicationStatus, error) {
@@ -219,16 +244,15 @@ func applicationStatusFromYaml(yamlFilePath string) (*v1.ApplicationStatus, erro
 	if err != nil {
 		return nil, fmt.Errorf("failed to read file %s", yamlFilePath)
 	}
-	decode := scheme.Codecs.UniversalDeserializer().Decode
-	obj, _, err := decode(yamlBytes, nil, &v1.ApplicationStatus{})
+
+	var applicationStatus v1.ApplicationStatus
+	err = yaml.Unmarshal(yamlBytes, &applicationStatus)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode %s: %s", yamlFilePath, err)
 	}
-	application, ok := obj.(*v1.ApplicationStatus)
-	if !ok {
-		return nil, fmt.Errorf("decoded file %s is not v1.ApplicationStatus", yamlFilePath)
-	}
-	return application, nil
+	return &applicationStatus, nil
+
 }
 
 func createFullConfig() v1.Config {
