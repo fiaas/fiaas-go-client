@@ -2,8 +2,8 @@ apiVersion: fiaas.schibsted.io/v1
 kind: ApplicationStatus
 metadata:
   labels:
-    app: simple-success
-    fiaas/deployment_id: 3
-  name: simple-success-3
+    app: simple-initiated
+    fiaas/deployment_id: 0
+  name: simple-initiated-0
   namespace: "default"
-result: SUCCESS
+result: INITIATED

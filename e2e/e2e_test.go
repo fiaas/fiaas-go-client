@@ -120,13 +120,43 @@ var applicationStatusTests = []struct {
 	expectedYamlFilePath string
 	applicationStatus    v1.ApplicationStatus
 }{
+	{"expected/applicationstatus/simple-initiated.yml", v1.ApplicationStatus{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "simple-initiated-0",
+			Namespace: "default",
+			Labels: map[string]string{
+				"app":                 "simple-initiated",
+				"fiaas/deployment_id": "0",
+			},
+		},
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "fiaas.schibsted.io/v1",
+			Kind:       "ApplicationStatus",
+		},
+		Result: "INITIATED",
+	}},
+	{"expected/applicationstatus/simple-running.yml", v1.ApplicationStatus{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "simple-running-1",
+			Namespace: "default",
+			Labels: map[string]string{
+				"app":                 "simple-running",
+				"fiaas/deployment_id": "1",
+			},
+		},
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "fiaas.schibsted.io/v1",
+			Kind:       "ApplicationStatus",
+		},
+		Result: "RUNNING",
+	}},
 	{"expected/applicationstatus/simple-success.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "simple-success-aabbcc112233",
+			Name:      "simple-success-3",
 			Namespace: "default",
 			Labels: map[string]string{
 				"app":                 "simple-success",
-				"fiaas/deployment_id": "ddeeff556677",
+				"fiaas/deployment_id": "3",
 			},
 		},
 		TypeMeta: metav1.TypeMeta{
@@ -134,6 +164,21 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "SUCCESS",
+	}},
+	{"expected/applicationstatus/simple-failed.yml", v1.ApplicationStatus{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "simple-failed-4",
+			Namespace: "default",
+			Labels: map[string]string{
+				"app":                 "simple-failed-4",
+				"fiaas/deployment_id": "4",
+			},
+		},
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "fiaas.schibsted.io/v1",
+			Kind:       "ApplicationStatus",
+		},
+		Result: "FAILED",
 	}},
 }
 
