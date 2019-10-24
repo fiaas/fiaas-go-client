@@ -7,3 +7,7 @@ metadata:
   name: simple-running-1
   namespace: "default"
 result: RUNNING
+logs:
+- '[2019-06-17 09:35:43,080|   INFO] a log line'
+- '[2019-06-17 09:35:44,522|   INFO] more logs'
+- '[2019-06-17 09:35:44,565|   INFO] even more'

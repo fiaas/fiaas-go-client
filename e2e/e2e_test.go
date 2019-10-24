@@ -116,6 +116,12 @@ func TestApplication(t *testing.T) {
 	}
 }
 
+var applicationStatusLogs = []string{
+	"[2019-06-17 09:35:43,080|   INFO] a log line",
+	"[2019-06-17 09:35:44,522|   INFO] more logs",
+	"[2019-06-17 09:35:44,565|   INFO] even more",
+}
+
 var applicationStatusTests = []struct {
 	expectedYamlFilePath string
 	applicationStatus    v1.ApplicationStatus
@@ -134,6 +140,7 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "INITIATED",
+		Logs:   applicationStatusLogs,
 	}},
 	{"expected/applicationstatus/simple-running.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
@@ -149,6 +156,7 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "RUNNING",
+		Logs:   applicationStatusLogs,
 	}},
 	{"expected/applicationstatus/simple-success.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
@@ -164,6 +172,7 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "SUCCESS",
+		Logs:   applicationStatusLogs,
 	}},
 	{"expected/applicationstatus/simple-failed.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
@@ -179,6 +188,7 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "FAILED",
+		Logs:   applicationStatusLogs,
 	}},
 }
 
