@@ -19,3 +19,8 @@ In `types.go`, we made a deliberate choice to treat the `Config` struct field of
 ## Usage
 
 <!-- TODO: Add example code -->
+
+
+## Tests
+
+To run end-to-end tests, [Kind](https://github.com/kubernetes-sigs/kind#installation-and-usage) and [Docker](https://docs.docker.com/install/) must be installed. The end-to-end tests can be run with `make e2e`.
