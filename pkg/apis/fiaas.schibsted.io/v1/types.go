@@ -95,7 +95,7 @@ type ApplicationStatus struct {
 	metav1.TypeMeta   `json:",inline"` // apiVersion, kind
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	Logs              []string `json:"logs"`
-	Result            string   `json:"Result"`
+	Result            string   `json:"result"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
