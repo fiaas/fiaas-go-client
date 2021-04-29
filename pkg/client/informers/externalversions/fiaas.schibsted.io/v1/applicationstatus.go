@@ -3,6 +3,7 @@
 package v1
 
 import (
+	"context"
 	time "time"
 
 	fiaasschibstediov1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
@@ -45,13 +46,13 @@ func NewFilteredApplicationStatusInformer(client versioned.Interface, namespace 
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.FiaasV1().ApplicationStatuses(namespace).List(options)
+				return client.FiaasV1().ApplicationStatuses(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.FiaasV1().ApplicationStatuses(namespace).Watch(options)
+				return client.FiaasV1().ApplicationStatuses(namespace).Watch(context.TODO(), options)
 			},
 		},
 		&fiaasschibstediov1.ApplicationStatus{},

@@ -3,6 +3,8 @@
 package fake
 
 import (
+	"context"
+
 	fiaasschibstediov1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
@@ -23,7 +25,7 @@ var applicationstatusesResource = schema.GroupVersionResource{Group: "fiaas.schi
 var applicationstatusesKind = schema.GroupVersionKind{Group: "fiaas.schibsted.io", Version: "v1", Kind: "ApplicationStatus"}
 
 // Get takes name of the applicationStatus, and returns the corresponding applicationStatus object, and an error if there is any.
-func (c *FakeApplicationStatuses) Get(name string, options v1.GetOptions) (result *fiaasschibstediov1.ApplicationStatus, err error) {
+func (c *FakeApplicationStatuses) Get(ctx context.Context, name string, options v1.GetOptions) (result *fiaasschibstediov1.ApplicationStatus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewGetAction(applicationstatusesResource, c.ns, name), &fiaasschibstediov1.ApplicationStatus{})
 
@@ -34,7 +36,7 @@ func (c *FakeApplicationStatuses) Get(name string, options v1.GetOptions) (resul
 }
 
 // List takes label and field selectors, and returns the list of ApplicationStatuses that match those selectors.
-func (c *FakeApplicationStatuses) List(opts v1.ListOptions) (result *fiaasschibstediov1.ApplicationStatusList, err error) {
+func (c *FakeApplicationStatuses) List(ctx context.Context, opts v1.ListOptions) (result *fiaasschibstediov1.ApplicationStatusList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewListAction(applicationstatusesResource, applicationstatusesKind, c.ns, opts), &fiaasschibstediov1.ApplicationStatusList{})
 
@@ -56,14 +58,14 @@ func (c *FakeApplicationStatuses) List(opts v1.ListOptions) (result *fiaasschibs
 }
 
 // Watch returns a watch.Interface that watches the requested applicationStatuses.
-func (c *FakeApplicationStatuses) Watch(opts v1.ListOptions) (watch.Interface, error) {
+func (c *FakeApplicationStatuses) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
 		InvokesWatch(testing.NewWatchAction(applicationstatusesResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a applicationStatus and creates it.  Returns the server's representation of the applicationStatus, and an error, if there is any.
-func (c *FakeApplicationStatuses) Create(applicationStatus *fiaasschibstediov1.ApplicationStatus) (result *fiaasschibstediov1.ApplicationStatus, err error) {
+func (c *FakeApplicationStatuses) Create(ctx context.Context, applicationStatus *fiaasschibstediov1.ApplicationStatus, opts v1.CreateOptions) (result *fiaasschibstediov1.ApplicationStatus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(applicationstatusesResource, c.ns, applicationStatus), &fiaasschibstediov1.ApplicationStatus{})
 
@@ -74,7 +76,7 @@ func (c *FakeApplicationStatuses) Create(applicationStatus *fiaasschibstediov1.A
 }
 
 // Update takes the representation of a applicationStatus and updates it. Returns the server's representation of the applicationStatus, and an error, if there is any.
-func (c *FakeApplicationStatuses) Update(applicationStatus *fiaasschibstediov1.ApplicationStatus) (result *fiaasschibstediov1.ApplicationStatus, err error) {
+func (c *FakeApplicationStatuses) Update(ctx context.Context, applicationStatus *fiaasschibstediov1.ApplicationStatus, opts v1.UpdateOptions) (result *fiaasschibstediov1.ApplicationStatus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(applicationstatusesResource, c.ns, applicationStatus), &fiaasschibstediov1.ApplicationStatus{})
 
@@ -85,7 +87,7 @@ func (c *FakeApplicationStatuses) Update(applicationStatus *fiaasschibstediov1.A
 }
 
 // Delete takes name of the applicationStatus and deletes it. Returns an error if one occurs.
-func (c *FakeApplicationStatuses) Delete(name string, options *v1.DeleteOptions) error {
+func (c *FakeApplicationStatuses) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
 		Invokes(testing.NewDeleteAction(applicationstatusesResource, c.ns, name), &fiaasschibstediov1.ApplicationStatus{})
 
@@ -93,15 +95,15 @@ func (c *FakeApplicationStatuses) Delete(name string, options *v1.DeleteOptions)
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeApplicationStatuses) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(applicationstatusesResource, c.ns, listOptions)
+func (c *FakeApplicationStatuses) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewDeleteCollectionAction(applicationstatusesResource, c.ns, listOpts)
 
 	_, err := c.Fake.Invokes(action, &fiaasschibstediov1.ApplicationStatusList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched applicationStatus.
-func (c *FakeApplicationStatuses) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *fiaasschibstediov1.ApplicationStatus, err error) {
+func (c *FakeApplicationStatuses) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *fiaasschibstediov1.ApplicationStatus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewPatchSubresourceAction(applicationstatusesResource, c.ns, name, pt, data, subresources...), &fiaasschibstediov1.ApplicationStatus{})
 
