@@ -3,6 +3,7 @@
 package e2e
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -83,6 +84,7 @@ func TestApplication(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to create client: %s", err)
 	}
+	ctx := context.Background()
 	for i, testcase := range applicationTests {
 		t.Run(fmt.Sprintf("%d/%s", i, testcase.expectedYamlFilePath), func(t *testing.T) {
 			expected, err := applicationFromYaml(testcase.expectedYamlFilePath)
@@ -91,18 +93,18 @@ func TestApplication(t *testing.T) {
 			}
 
 			applicationsClient := clientset.FiaasV1().Applications(testcase.application.Namespace)
-			_, err = applicationsClient.Create(&testcase.application)
+			_, err = applicationsClient.Create(ctx, &testcase.application, metav1.CreateOptions{})
 			if err != nil {
 				t.Fatalf("failed to create application: %s", err)
 			}
 
 			defer func() {
-				err := applicationsClient.Delete(testcase.application.Name, &metav1.DeleteOptions{})
+				err := applicationsClient.Delete(ctx, testcase.application.Name, metav1.DeleteOptions{})
 				if err != nil && !apimachineryerrors.IsNotFound(err) {
 					t.Fatalf("failed to delete application: %s", err)
 				}
 			}()
-			actual, err := applicationsClient.Get(testcase.application.Name, metav1.GetOptions{})
+			actual, err := applicationsClient.Get(ctx, testcase.application.Name, metav1.GetOptions{})
 			if err != nil {
 				t.Fatalf("failed to get application: %s", err)
 			}
@@ -197,6 +199,7 @@ func TestApplicationStatus(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to create client: %s", err)
 	}
+	ctx := context.Background()
 	for i, testcase := range applicationStatusTests {
 		t.Run(fmt.Sprintf("%d/%s", i, testcase.expectedYamlFilePath), func(t *testing.T) {
 
@@ -208,19 +211,19 @@ func TestApplicationStatus(t *testing.T) {
 			applicationStatusesClient := clientset.FiaasV1().ApplicationStatuses(
 				testcase.applicationStatus.Namespace)
 			defer func() {
-				err := applicationStatusesClient.Delete(testcase.applicationStatus.Name,
-					&metav1.DeleteOptions{})
+				err := applicationStatusesClient.Delete(ctx, testcase.applicationStatus.Name,
+					metav1.DeleteOptions{})
 				if err != nil && !apimachineryerrors.IsNotFound(err) {
 					t.Fatalf("failed to delete applicationStatus: %s", err)
 				}
 			}()
 
-			_, err = applicationStatusesClient.Create(&testcase.applicationStatus)
+			_, err = applicationStatusesClient.Create(ctx, &testcase.applicationStatus, metav1.CreateOptions{})
 			if err != nil {
 				t.Fatalf("failed to create applicationStatus: %s", err)
 			}
 
-			actual, err := applicationStatusesClient.Get(testcase.applicationStatus.Name,
+			actual, err := applicationStatusesClient.Get(ctx, testcase.applicationStatus.Name,
 				metav1.GetOptions{})
 			if err != nil {
 				t.Fatalf("failed to get applicationStatus: %s", err)
