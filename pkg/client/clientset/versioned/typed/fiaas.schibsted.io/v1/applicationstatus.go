@@ -3,6 +3,7 @@
 package v1
 
 import (
+	"context"
 	"time"
 
 	v1 "github.com/fiaas/fiaas-go-client/pkg/apis/fiaas.schibsted.io/v1"
@@ -21,14 +22,14 @@ type ApplicationStatusesGetter interface {
 
 // ApplicationStatusInterface has methods to work with ApplicationStatus resources.
 type ApplicationStatusInterface interface {
-	Create(*v1.ApplicationStatus) (*v1.ApplicationStatus, error)
-	Update(*v1.ApplicationStatus) (*v1.ApplicationStatus, error)
-	Delete(name string, options *metav1.DeleteOptions) error
-	DeleteCollection(options *metav1.DeleteOptions, listOptions metav1.ListOptions) error
-	Get(name string, options metav1.GetOptions) (*v1.ApplicationStatus, error)
-	List(opts metav1.ListOptions) (*v1.ApplicationStatusList, error)
-	Watch(opts metav1.ListOptions) (watch.Interface, error)
-	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1.ApplicationStatus, err error)
+	Create(ctx context.Context, applicationStatus *v1.ApplicationStatus, opts metav1.CreateOptions) (*v1.ApplicationStatus, error)
+	Update(ctx context.Context, applicationStatus *v1.ApplicationStatus, opts metav1.UpdateOptions) (*v1.ApplicationStatus, error)
+	Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error
+	DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error
+	Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.ApplicationStatus, error)
+	List(ctx context.Context, opts metav1.ListOptions) (*v1.ApplicationStatusList, error)
+	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.ApplicationStatus, err error)
 	ApplicationStatusExpansion
 }
 
@@ -47,20 +48,20 @@ func newApplicationStatuses(c *FiaasV1Client, namespace string) *applicationStat
 }
 
 // Get takes name of the applicationStatus, and returns the corresponding applicationStatus object, and an error if there is any.
-func (c *applicationStatuses) Get(name string, options metav1.GetOptions) (result *v1.ApplicationStatus, err error) {
+func (c *applicationStatuses) Get(ctx context.Context, name string, options metav1.GetOptions) (result *v1.ApplicationStatus, err error) {
 	result = &v1.ApplicationStatus{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("application-statuses").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // List takes label and field selectors, and returns the list of ApplicationStatuses that match those selectors.
-func (c *applicationStatuses) List(opts metav1.ListOptions) (result *v1.ApplicationStatusList, err error) {
+func (c *applicationStatuses) List(ctx context.Context, opts metav1.ListOptions) (result *v1.ApplicationStatusList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -71,13 +72,13 @@ func (c *applicationStatuses) List(opts metav1.ListOptions) (result *v1.Applicat
 		Resource("application-statuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Watch returns a watch.Interface that watches the requested applicationStatuses.
-func (c *applicationStatuses) Watch(opts metav1.ListOptions) (watch.Interface, error) {
+func (c *applicationStatuses) Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -88,71 +89,74 @@ func (c *applicationStatuses) Watch(opts metav1.ListOptions) (watch.Interface, e
 		Resource("application-statuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Watch()
+		Watch(ctx)
 }
 
 // Create takes the representation of a applicationStatus and creates it.  Returns the server's representation of the applicationStatus, and an error, if there is any.
-func (c *applicationStatuses) Create(applicationStatus *v1.ApplicationStatus) (result *v1.ApplicationStatus, err error) {
+func (c *applicationStatuses) Create(ctx context.Context, applicationStatus *v1.ApplicationStatus, opts metav1.CreateOptions) (result *v1.ApplicationStatus, err error) {
 	result = &v1.ApplicationStatus{}
 	err = c.client.Post().
 		Namespace(c.ns).
 		Resource("application-statuses").
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(applicationStatus).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Update takes the representation of a applicationStatus and updates it. Returns the server's representation of the applicationStatus, and an error, if there is any.
-func (c *applicationStatuses) Update(applicationStatus *v1.ApplicationStatus) (result *v1.ApplicationStatus, err error) {
+func (c *applicationStatuses) Update(ctx context.Context, applicationStatus *v1.ApplicationStatus, opts metav1.UpdateOptions) (result *v1.ApplicationStatus, err error) {
 	result = &v1.ApplicationStatus{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("application-statuses").
 		Name(applicationStatus.Name).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(applicationStatus).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
 
 // Delete takes name of the applicationStatus and deletes it. Returns an error if one occurs.
-func (c *applicationStatuses) Delete(name string, options *metav1.DeleteOptions) error {
+func (c *applicationStatuses) Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("application-statuses").
 		Name(name).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *applicationStatuses) DeleteCollection(options *metav1.DeleteOptions, listOptions metav1.ListOptions) error {
+func (c *applicationStatuses) DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error {
 	var timeout time.Duration
-	if listOptions.TimeoutSeconds != nil {
-		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
+	if listOpts.TimeoutSeconds != nil {
+		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("application-statuses").
-		VersionedParams(&listOptions, scheme.ParameterCodec).
+		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
-		Body(options).
-		Do().
+		Body(&opts).
+		Do(ctx).
 		Error()
 }
 
 // Patch applies the patch and returns the patched applicationStatus.
-func (c *applicationStatuses) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1.ApplicationStatus, err error) {
+func (c *applicationStatuses) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.ApplicationStatus, err error) {
 	result = &v1.ApplicationStatus{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("application-statuses").
-		SubResource(subresources...).
 		Name(name).
+		SubResource(subresources...).
+		VersionedParams(&opts, scheme.ParameterCodec).
 		Body(data).
-		Do().
+		Do(ctx).
 		Into(result)
 	return
 }
