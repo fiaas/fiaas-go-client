@@ -9,4 +9,6 @@ verify:
 	${ROOT_DIR}/hack/verify-codegen.sh
 
 e2e:
-	${ROOT_DIR}/hack/e2e-test
+	${ROOT_DIR}/hack/e2e-test v1.20.7
+	${ROOT_DIR}/hack/e2e-test v1.21.2
+	${ROOT_DIR}/hack/e2e-test v1.22.4
