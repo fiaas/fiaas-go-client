@@ -6,7 +6,7 @@ install_kubectl() {
     local k8s_version="$1"
     echo "Installing kubectl"
     local url="https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl"
-    local checksum_url="https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl.sha1"
+    local checksum_url="https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl.sha256"
     install_dir="$(mktemp -d)"
     _cleanup() {
         rm -rf "$install_dir"

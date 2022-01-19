@@ -190,7 +190,7 @@ var applicationStatusTests = []struct {
 			Kind:       "ApplicationStatus",
 		},
 		Result: "SUCCESS",
-		Logs: []string{},
+		Logs: nil,
 	}},
 	{"expected/applicationstatus/simple-failed.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
