@@ -176,6 +176,22 @@ var applicationStatusTests = []struct {
 		Result: "SUCCESS",
 		Logs:   applicationStatusLogs,
 	}},
+	{"expected/applicationstatus/simple-success-no-logs.yml", v1.ApplicationStatus{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "simple-success-no-logs-3",
+			Namespace: "default",
+			Labels: map[string]string{
+				"app":                 "simple-success-no-logs",
+				"fiaas/deployment_id": "3",
+			},
+		},
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "fiaas.schibsted.io/v1",
+			Kind:       "ApplicationStatus",
+		},
+		Result: "SUCCESS",
+		Logs: nil,
+	}},
 	{"expected/applicationstatus/simple-failed.yml", v1.ApplicationStatus{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "simple-failed-4",
