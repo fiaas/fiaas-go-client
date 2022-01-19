@@ -1,0 +1,127 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: applications.fiaas.schibsted.io
+spec:
+  preserveUnknownFields: false
+  conversion:
+    strategy: None
+  group: fiaas.schibsted.io
+  names:
+    kind: Application
+    listKind: ApplicationList
+    plural: applications
+    shortNames:
+    - app
+    - fa
+    singular: application
+  scope: Namespaced
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              application:
+                type: string
+              image:
+                type: string
+              config:
+                type: object
+                # this may make it possible to support v2 _and_ v3 app_config
+                # BUT means client side validation is not possible (?)
+                x-kubernetes-preserve-unknown-fields: true
+              additional_labels:
+                type: object
+                properties:
+                  global:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  deployment:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  horizontal_pod_autoscaler:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  ingress:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  service:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  service_account:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  pod:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  status:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+              additional_annotations:
+                type: object
+                properties:
+                  global:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  deployment:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  horizontal_pod_autoscaler:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  ingress:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  service:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  service_account:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  pod:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  status:
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: application-statuses.fiaas.schibsted.io
+spec:
+  preserveUnknownFields: false
+  conversion:
+    strategy: None
+  group: fiaas.schibsted.io
+  names:
+    kind: ApplicationStatus
+    listKind: ApplicationStatusList
+    plural: application-statuses
+    shortNames:
+    - status
+    - appstatus
+    - fs
+    singular: applicationstatus
+  scope: Namespaced
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          result:
+            type: string
+          logs:
+            type: array
+            items:
+              type: string
