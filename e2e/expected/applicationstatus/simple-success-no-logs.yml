@@ -1,0 +1,10 @@
+apiVersion: fiaas.schibsted.io/v1
+kind: ApplicationStatus
+metadata:
+  labels:
+    app: simple-success-no-logs
+    fiaas/deployment_id: 3
+  name: simple-success-no-logs-3
+  namespace: "default"
+result: SUCCESS
+logs:

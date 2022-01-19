@@ -10,8 +10,10 @@ import (
 )
 
 // ApplicationStatusLister helps list ApplicationStatuses.
+// All objects returned here must be treated as read-only.
 type ApplicationStatusLister interface {
 	// List lists all ApplicationStatuses in the indexer.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1.ApplicationStatus, err error)
 	// ApplicationStatuses returns an object that can list and get ApplicationStatuses.
 	ApplicationStatuses(namespace string) ApplicationStatusNamespaceLister
@@ -42,10 +44,13 @@ func (s *applicationStatusLister) ApplicationStatuses(namespace string) Applicat
 }
 
 // ApplicationStatusNamespaceLister helps list and get ApplicationStatuses.
+// All objects returned here must be treated as read-only.
 type ApplicationStatusNamespaceLister interface {
 	// List lists all ApplicationStatuses in the indexer for a given namespace.
+	// Objects returned here must be treated as read-only.
 	List(selector labels.Selector) (ret []*v1.ApplicationStatus, err error)
 	// Get retrieves the ApplicationStatus from the indexer for a given namespace and name.
+	// Objects returned here must be treated as read-only.
 	Get(name string) (*v1.ApplicationStatus, error)
 	ApplicationStatusNamespaceListerExpansion
 }
