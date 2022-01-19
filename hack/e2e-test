@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+KUBERNETES_VERSION="$1"
 CLUSTER_NAME=fiaas-go-client-e2e
+KIND_KUBECONFIG="$(mktemp)"
 
 __cleanup() {
-    kind delete cluster --name "$CLUSTER_NAME"
+    kind delete cluster --kubeconfig "$KIND_KUBECONFIG" --name "$CLUSTER_NAME"
+    rm "$KIND_KUBECONFIG"
 }
+
 trap __cleanup EXIT
 
-kind create cluster --name "$CLUSTER_NAME" --wait 30s
-KIND_KUBECONFIG="$(kind get kubeconfig-path --name "$CLUSTER_NAME")"
-kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds.yml
+kind create cluster --kubeconfig="$KIND_KUBECONFIG" --name "$CLUSTER_NAME" --image "kindest/node:$KUBERNETES_VERSION" --wait 30s
+
+if [[ $KUBERNETES_VERSION == "v1.22.4" ]]; then
+  kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds-v1.yml
+else
+  kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds.yml
+fi
 
 export KIND_KUBECONFIG
 go test --tags=e2e ./...
