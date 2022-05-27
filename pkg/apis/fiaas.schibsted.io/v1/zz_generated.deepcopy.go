@@ -47,6 +47,13 @@ func (in *AdditionalLabelsOrAnnotations) DeepCopyInto(out *AdditionalLabelsOrAnn
 			(*out)[key] = val
 		}
 	}
+	if in.ServiceAccount != nil {
+		in, out := &in.ServiceAccount, &out.ServiceAccount
+		*out = make(map[string]string, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
+		}
+	}
 	if in.Pod != nil {
 		in, out := &in.Pod, &out.Pod
 		*out = make(map[string]string, len(*in))

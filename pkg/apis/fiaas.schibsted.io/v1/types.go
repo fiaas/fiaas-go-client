@@ -55,6 +55,7 @@ type AdditionalLabelsOrAnnotations struct {
 	HorizontalPodAutoscaler map[string]string `json:"horizontal_pod_autoscaler,omitempty"`
 	Ingress                 map[string]string `json:"ingress,omitempty"`
 	Service                 map[string]string `json:"service,omitempty"`
+	ServiceAccount          map[string]string `json:"service_account,omitempty"`
 	Pod                     map[string]string `json:"pod,omitempty"`
 	Status                  map[string]string `json:"status,omitempty"`
 }
@@ -68,7 +69,6 @@ func (in *Config) DeepCopyInto(out *Config) {
 	enc.Encode(in)
 
 	dec.Decode(&out)
-
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
