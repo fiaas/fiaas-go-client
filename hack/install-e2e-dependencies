@@ -30,5 +30,5 @@ install_kind() {
     chmod +x "$HOME/bin/kind"
 }
 
-install_kind v0.11.1
-install_kubectl v1.21.2
+install_kind v0.17.0
+install_kubectl v1.24.7
