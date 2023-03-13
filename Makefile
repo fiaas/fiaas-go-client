@@ -1,5 +1,7 @@
 .PHONY: e2e
 
+# This version should be kept in sync with the most recent version in the CI matrix in .semaphore/semaphore.yaml
+K8S_VERSION ?= v1.24.7
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 generate-code:
@@ -9,6 +11,4 @@ verify:
 	${ROOT_DIR}/hack/verify-codegen.sh
 
 e2e:
-	${ROOT_DIR}/hack/e2e-test v1.20.7
-	${ROOT_DIR}/hack/e2e-test v1.21.2
-	${ROOT_DIR}/hack/e2e-test v1.22.4
+	${ROOT_DIR}/hack/e2e-test $(K8S_VERSION)

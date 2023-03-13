@@ -19,5 +19,17 @@ blocks:
         - name: verify
           commands:
             - checkout
+            - make verify
+        - name: e2e test
+          commands:
+            - checkout
             - hack/install-e2e-dependencies
-            - make verify e2e
+            - make e2e
+          matrix:
+            # when adding to this list, set K8S_VERSION in Makefile to the most recent version in the list here
+            - env_var: K8S_VERSION
+              values:
+                - v1.21.14
+                - v1.22.15
+                - v1.23.13
+                - v1.24.7
