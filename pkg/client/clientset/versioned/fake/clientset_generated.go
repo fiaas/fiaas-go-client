@@ -58,7 +58,10 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 	return c.tracker
 }
 
-var _ clientset.Interface = &Clientset{}
+var (
+	_ clientset.Interface = &Clientset{}
+	_ testing.FakeClient  = &Clientset{}
+)
 
 // FiaasV1 retrieves the FiaasV1Client
 func (c *Clientset) FiaasV1() fiaasv1.FiaasV1Interface {
