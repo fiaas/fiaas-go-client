@@ -14,11 +14,7 @@ trap __cleanup EXIT
 
 kind create cluster --kubeconfig="$KIND_KUBECONFIG" --name "$CLUSTER_NAME" --image "kindest/node:$KUBERNETES_VERSION" --wait 30s
 
-if [[ $KUBERNETES_VERSION == "v1.22.4" ]]; then
-  kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds-v1.yml
-else
-  kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds.yml
-fi
+kubectl --kubeconfig="$KIND_KUBECONFIG" apply -f hack/fiaas-crds-v1.yml
 
 export KIND_KUBECONFIG
 go test --tags=e2e ./...
