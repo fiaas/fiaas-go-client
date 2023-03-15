@@ -8,7 +8,7 @@ TEMP_DIR=`mktemp -d`
 SCRIPT_ROOT=$(dirname ${BASH_SOURCE})/..
 CODEGEN_PACKAGE=$TEMP_DIR/code-generator
 
-git clone -b kubernetes-1.21.0 https://github.com/kubernetes/code-generator $CODEGEN_PACKAGE
+git clone -b kubernetes-1.22.17 https://github.com/kubernetes/code-generator $CODEGEN_PACKAGE
 
 export GO111MODULE=on
 
