@@ -89,7 +89,7 @@ func (c *FakeApplicationStatuses) Update(ctx context.Context, applicationStatus 
 // Delete takes name of the applicationStatus and deletes it. Returns an error if one occurs.
 func (c *FakeApplicationStatuses) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteAction(applicationstatusesResource, c.ns, name), &fiaasschibstediov1.ApplicationStatus{})
+		Invokes(testing.NewDeleteActionWithOptions(applicationstatusesResource, c.ns, name, opts), &fiaasschibstediov1.ApplicationStatus{})
 
 	return err
 }
