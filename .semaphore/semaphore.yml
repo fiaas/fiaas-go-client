@@ -14,7 +14,7 @@ blocks:
           - export "PATH=$HOME/bin:$(go env GOPATH)/bin:${PATH}"
           - export "GO111MODULE=on"
           - mkdir -vp "${SEMAPHORE_GIT_DIR}" "$(go env GOPATH)/bin"
-          - sem-version go 1.17
+          - sem-version go 1.19
       jobs:
         - name: verify
           commands:
