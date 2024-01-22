@@ -72,8 +72,9 @@ func (in *Config) DeepCopyInto(out *Config) {
 }
 
 func init() {
-	// Needed to use an interface type with gob
+	// Needed to use an interface types with gob
 	gob.Register(map[string]interface{}{})
+	gob.Register([]interface{}{})
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
