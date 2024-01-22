@@ -71,6 +71,12 @@ func (in *Config) DeepCopyInto(out *Config) {
 	dec.Decode(&out)
 }
 
+func init() {
+	// Needed to use an interface types with gob
+	gob.Register(map[string]interface{}{})
+	gob.Register([]interface{}{})
+}
+
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // ApplicationList is a top-level list type. The client methods for lists are automatically created.
