@@ -12,3 +12,6 @@ verify:
 
 e2e:
 	${ROOT_DIR}/hack/e2e-test $(K8S_VERSION)
+
+test:
+	go test ./... -v -cover --vet=all

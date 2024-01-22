@@ -19,7 +19,7 @@ blocks:
         - name: verify
           commands:
             - checkout
-            - make verify
+            - make verify test
         - name: e2e test
           commands:
             - checkout
