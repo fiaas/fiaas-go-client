@@ -58,6 +58,7 @@ type AdditionalLabelsOrAnnotations struct {
 	ServiceAccount          map[string]string `json:"service_account,omitempty"`
 	Pod                     map[string]string `json:"pod,omitempty"`
 	Status                  map[string]string `json:"status,omitempty"`
+	PodDisruptionBudget     map[string]string `json:"pod_disruption_budget,omitempty"`
 }
 
 // DeepCopyInto is necessary to be able to use a map with an anonymous interface as type for Config
