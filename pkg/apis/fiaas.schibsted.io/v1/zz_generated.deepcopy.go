@@ -68,6 +68,13 @@ func (in *AdditionalLabelsOrAnnotations) DeepCopyInto(out *AdditionalLabelsOrAnn
 			(*out)[key] = val
 		}
 	}
+	if in.PodDisruptionBudget != nil {
+		in, out := &in.PodDisruptionBudget, &out.PodDisruptionBudget
+		*out = make(map[string]string, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
+		}
+	}
 	return
 }
 
